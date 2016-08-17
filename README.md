@@ -38,5 +38,5 @@ List of known bugs in the program:
 ``` 
 -Fails to determine when a command "fails" such that it would/would not execute the next statement
 -Issues when using certain commands like "cd"
-
+-The program will accept some connectors within quotation marks (i.e. echo "hello;" echo what, returns hello\n what)
 ``` 
