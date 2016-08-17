@@ -10,7 +10,21 @@ $ cd rshell
 $ git checkout hw2
 $ make
 $ bin/rshell
+```
+##Description
+rshell is a command shell that runs in C++, the shell performs in the following steps:
 ``` 
+1. Print a command prompt (e.g. $)
+2. Read in a command on one line
+``` 
+The commands will have the form:
+``` 
+cmd         = executable [ argumentList ] [ connector cmd ];
+connector   = || or && or ;
+``` 
+
+
+
 ##Testing 
 To run the program and test shell scripts
 ``` 
