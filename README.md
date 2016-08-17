@@ -32,3 +32,11 @@ Compile rshell.cpp
 While running the ./a.out file execute the shell scripts inside the tests directory ex: ./single_command.sh
 
 ``` 
+
+##Known Bugs
+List of known bugs in the program:
+``` 
+-Fails to determine when a command "fails" such that it would/would not execute the next statement
+-Issues when using certain commands like "cd"
+
+``` 
