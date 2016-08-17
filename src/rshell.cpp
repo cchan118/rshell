@@ -1,26 +1,31 @@
 #include "Cmd.h"
+#include "CmdCheck.h"
 
 int main() {
-    CmdComposer c;
-    char username[40];
-    char hostname[40];
-    for (int i = 0; i < 40; ++i) 
+    CmdCheck c;
+
+    char username[80];
+    char hostname[80];
+
+    for (int i = 0; i < 80; ++i) 
     {
         username[i] = 0;
         hostname[i] = 0;
     }
 
-    getlogin_r(username, 40);
-    gethostname(hostname, 40);
+    getlogin_r(username, 80);
+    gethostname(hostname, 80);
 
-    while (true) 
+    string str;
+    while (str != "exit") 
     {
-        cout << username << "@" << hostname << "$ ";
-        string str;
+        cout << username << "@" << hostname << "$ "; //extra credit
+
+        //get input and call run on each statement
         getline(cin, str);
         istringstream ss(str);
-        Base* bc = c.compose(ss);
-        bc->run();
-        delete bc;
+        Base* b = c.check(ss);
+        b->run();
+        delete b;
     }
 }
