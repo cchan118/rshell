@@ -11,3 +11,10 @@ $ git checkout hw2
 $ make
 $ bin/rshell
 ``` 
+##Testing 
+To run the program and test shell scripts
+``` 
+Compile rshell.cpp
+While running the ./a.out file execute the shell scripts inside the tests directory ex: ./single_command.sh
+
+``` 
