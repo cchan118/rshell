@@ -27,7 +27,7 @@ class CmdCheck {
                 else 
                 {
                     bool comment = false;
-                    for (int i = 0; i < token.size(); ++i) 
+                    for (unsigned i = 0; i < token.size(); ++i) 
                     {
                         if (token.at(i) == '#') 
                         {
@@ -66,7 +66,7 @@ class CmdCheck {
             
 	    //moves from vector to argument list
             char** args = new char*[v.size() + 1];
-            for (int i = 0; i < v.size(); ++i) 
+            for (unsigned i = 0; i < v.size(); ++i) 
             {
                 args[i] = new char[v.at(i).size() + 1];
                 strcpy(args[i], v.at(i).c_str());
