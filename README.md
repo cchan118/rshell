@@ -1,6 +1,6 @@
 # rshell
 
-Collaborators: Chih-Cheih Chang, Francisco Prado 
+Collaborators: Chih-Chieh Chang, Francisco Prado 
 
 ##Installation 
 To download and file the file
