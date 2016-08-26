@@ -15,7 +15,8 @@ $ bin/rshell
 Adds the test command to your rshell, as well as its symbolic equivalent [ ]. The square brackets [ ] are actually set up as the test command in bash. This command returns 0 (TRUE) if the test succeeds and 1 (FALSE) if the test fails. This command is very useful for writing conditions that can be combined with && and || to write more complex bash command structures.
 Additionally,  parentheses ( ) act as precedence operators in rshell. The parentheses ( ) operators are used to change the precedence of the returns of commands, connectors, and chains of connectors.
 ``` 
-The commands will have the form:
+``` 
+##The commands will have the form:
 ``` 
 $ test -e /test/file/path && echo “path exists”
 $ [ -e test/file/path ]
@@ -25,6 +26,8 @@ $ [ -e /test/file/path ] && echo “path exists”
 $ echo A && echo B || echo C && echo D
 $ (echo A && echo B) || (echo C && echo D)
 ``` 
+
+
 
 
 
