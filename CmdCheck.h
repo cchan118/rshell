@@ -17,147 +17,18 @@ class CmdCheck {
             vector<string> v;
             string con = ""; 
 
-	    vector<string> test;
+	        vector<string> test;
             stringstream newtoken;
-	    string temp;
+	        string temp;
             while (ss >> token) //gets input from string stream and doesnt echo quotation marks
             {
-           	if (token.at(0) == '"') 
+                
+                //Check quotation and # before anything
+           	    if (token.at(0) == '"') 
                 {
                     token = token.substr(1, token.size() - 2);
-		}
-		else if (token == "test") //implement 
-		{
-			
-		}
-		else if (token.at(0) == '[') // TEST CHECK - TODO: run stat() based on flag
-		{
-			bool done = false;
-			while (done == false)
-			{
-				unsigned i = 0;
-				if (token.at(i) == '[')
-				{
-					++i;
-				}
-				for (; i < token.size(); i++)
-				{
-					if (token.at(i) != ']')
-					{
-						newtoken << token.at(i);
-					}
-					else
-					{
-						done = true;
-					}
-				}
-				newtoken << ' ';
-			        ss >> token;
-		         }
-			token = newtoken.str();
-			cout << "YO: " << token << endl;
-
-			string flag;
-			string path;
-			int sep = 0;
-			for (unsigned i = 1; i < token.size()-1; i++)
-			{	
-				if (token.at(i) == ' ')
-				{
-					sep = i;
-				}
-			}
-			for (unsigned i = 1; i < sep; i++)
-			{	
-				flag += token.at(i);
-			}
-			for (unsigned i = sep; i < token.size()-1; i++)
-			{	
-				path += token.at(i);
-			}
-//stringstream test;
-//test << newtoken.str();
-cout << "flag : " << flag << endl; 
-cout << "path : " << path << endl; 
-/*
-if (token.at(1) == "-e")
-{
-	bget
-}
-else if (test == "-f")
-{
-	rewfr
-}
-else if (test == "-d")
-{
-	def
-}
-else
-{
-*/
-
-		}
-		else if (token.at(0) == '(') // PARETHESIS CHECK TODO: APPLY LOGIC FOR PRECEDENCE
-		{
-			bool done = false;
-			while (done == false)
-			{
-				unsigned i = 0;
-				if (token.at(i) == '(')
-				{
-					++i;
-				}
-				for (; i < token.size(); i++)
-				{
-					if (token.at(i) != ')')
-					{
-						newtoken << token.at(i);
-					}
-					else
-					{
-						done = true;
-						
-					}
-				}
-//cout << newtoken.str() << endl;
-token = newtoken.str();
-
-if (token.at(token.size() - 1) == ';') 
-                {
-                    con = "skip"; 
-                    v.push_back(token.substr(0, token.size() - 1));
-                    break;
-                }
-                else if (strcmp(token.c_str(), "||") == 0) 
-                {
-                    con = "yes"; 
-                    break;
-                }
-                else if (strcmp(token.c_str(), "&&") == 0) 
-                {
-                    con = "no";
-                    break;
-                }
-                
-                v.push_back(token);
-                     
-
-
-
-newtoken.str( std::string() );
-newtoken.clear();
-				//newtoken << ' ';
-			        ss >> token;
-
-		         }
-			 //token = newtoken.str();
-			 //cout << "W/O parenthesis: " << token << endl;
-			 
-			//TODO Run string as two separate commands then determine if true/false
-
-
-		}
-		//Anything that appears after a # character should be considered a comment. 
+		        }
+		        //Anything that appears after a # character should be considered a comment. 
                 else 
                 {
                     bool comment = false;
@@ -175,30 +46,146 @@ newtoken.clear();
                     }
                 }
                 
-		// identifies token as either ; && or || and places into vector
-                if (token.at(token.size() - 1) == ';') 
-                {
-                    con = "skip"; 
-                    v.push_back(token.substr(0, token.size() - 1));
-                    break;
-                }
-                else if (strcmp(token.c_str(), "||") == 0) 
-                {
-                    con = "yes"; 
-                    break;
-                }
-                else if (strcmp(token.c_str(), "&&") == 0) 
-                {
-                    con = "no";
-                    break;
-                }
                 
-                v.push_back(token);
-                     
-     
+		        else if (token == "test") //implement 
+		        {
+			
+		        }
+		        else if (token.at(0) == '[') // TEST CHECK - TODO: run stat() based on flag
+		        {
+			        bool done = false;
+			        while (done == false)
+			        {
+			        
+				        unsigned i = 0;
+				    
+				        if (token.at(i) == '[')
+				        {
+					        ++i;
+				        }
+				        for (; i < token.size(); i++)
+				        {
+					        if (token.at(i) != ']')
+					        {
+						        newtoken << token.at(i);
+					        }
+					        else
+					        {
+						        done = true;
+					        }
+				        }
+				
+				        newtoken << ' ';
+			            ss >> token;
+		            }
+		    
+			        token = newtoken.str();
+			        cout << "YO: " << token << endl;
+
+			        string flag;
+			        string path;
+			        int sep = 0;
+			    
+			        for (unsigned i = 1; i < token.size()-1; i++)
+			        {	
+				        if (token.at(i) == ' ')
+				        {
+					        sep = i;
+				        }
+			        }
+			    
+			        for (unsigned i = 1; i < sep; i++)
+			        {	
+				        flag += token.at(i);
+			        }
+			    
+			        for (unsigned i = sep; i < token.size()-1; i++)
+			        {	
+				        path += token.at(i);
+			        }
+		        }
+		        else if (token.at(0) == '(') // PARETHESIS CHECK TODO: APPLY LOGIC FOR PRECEDENCE
+		        {
+		        
+			        bool done = false;
+			        while (done == false)
+			        {
+				        unsigned i = 0;
+				        if (token.at(i) == '(')
+				        {
+					        ++i;
+				        }
+				        for (; i < token.size(); i++)
+				        {
+					        if (token.at(i) != ')')
+					        {
+						        newtoken << token.at(i);
+					        }
+					        else
+					        {
+						        done = true;
+					        }
+				        }
+                
+                        token = newtoken.str();
+
+                        if (token.at(token.size() - 1) == ';') 
+                        {
+                            con = "skip"; 
+                            v.push_back(token.substr(0, token.size() - 1));
+                            break;
+                        }
+                        else if (strcmp(token.c_str(), "||") == 0) 
+                        {
+                            con = "yes"; 
+                            break;
+                        }
+                        else if (strcmp(token.c_str(), "&&") == 0) 
+                        {
+                            con = "no";
+                            break;
+                        }
+                
+                        v.push_back(token);
+
+                        newtoken.str( std::string() );
+                        newtoken.clear();
+		                //newtoken << ' ';
+		                ss >> token;
+
+		            }
+			        //token = newtoken.str();
+			        //cout << "W/O parenthesis: " << token << endl;
+			 
+			        //TODO Run string as two separate commands then determine if true/false
+		        }   
+                
+                //If no parenthesis, then just check for connector
+		        else
+		        {
+		            // identifies token as either ; && or || and places into vector
+                    if (token.at(token.size() - 1) == ';') 
+                    {
+                        con = "skip"; 
+                        v.push_back(token.substr(0, token.size() - 1));
+                        break;
+                    }
+                    else if (strcmp(token.c_str(), "||") == 0) 
+                    {
+                        con = "yes"; 
+                        break;
+                    }
+                    else if (strcmp(token.c_str(), "&&") == 0) 
+                    {
+                        con = "no";
+                        break;
+                    }
+                
+                    v.push_back(token);
+		        }
             }
              
-	    //moves from vector to argument list
+	        //moves from vector to argument list
             char** args = new char*[v.size() + 1];
             for (unsigned i = 0; i < v.size(); ++i) 
             {
