@@ -7,6 +7,7 @@
 #include <sstream>
 #include <vector>
 #include <unistd.h>
+#include <sys/stat.h>
 using namespace std;
 class CmdCheck {
     public:
@@ -17,93 +18,177 @@ class CmdCheck {
             vector<string> v;
             string con = ""; 
 
-	        vector<string> test;
             stringstream newtoken;
-	        string temp;
+            
             while (ss >> token) //gets input from string stream and doesnt echo quotation marks
             {
-                
-                //Check quotation and # before anything
-           	    if (token.at(0) == '"') 
+           	if (token.at(0) == '"') 
                 {
                     token = token.substr(1, token.size() - 2);
+		}
+		else if (token == "test") //TEST CHECK
+		{
+		    string flag;
+		    string path;
+		    
+		    bool done = false;
+		    while (done == false)
+		    {
+			if (token == "test")
+			{
+				ss >> token;
+			}
+    			newtoken << token;
+			token = newtoken.str();
+			
+		        //cout << "TOKEN: " << token << endl;
+		        if (token == "-e" || token == "-f" || token == "-d")
+		        {
+		            flag = token;
 		        }
-		        //Anything that appears after a # character should be considered a comment. 
-                else 
-                {
-                    bool comment = false;
-                    for (unsigned i = 0; i < token.size(); ++i) 
+	                else
+	                {
+	                    path = token;
+	                    done = true;
+	                }
+					
+	                newtoken.str( std::string() );
+	                newtoken.clear();
+	
+				    ss >> token;
+			    
+		        if (token == ";" || token == "&&" || token == "||")
+    			{
+    				done = true;
+    			}
+		    }
+                    //cout << "flag : " << flag << endl; 
+                    //cout << "path : " << path << endl; 
+                    
+                    char f[1024];
+                    strcpy(f, path.c_str());
+                    struct stat exist;
+                    if (flag == "-e") 
                     {
-                        if (token.at(i) == '#') 
+                        if (stat(f, &exist) == 0) 
                         {
-                            token = token.substr(0, i);
-                            comment = true;
+                            cout << "(True)" << endl << "path exists" << endl;
+                        }
+                        else 
+                        {
+                            cout << "(False)" << endl;
                         }
                     }
-                    if (comment == true)
+                    else if (flag == "-f") 
                     {
-                        break;
+                        if (stat(f, &exist) == 0 && S_ISREG(exist.st_mode)) 
+                        {
+                            cout << "(True)" << endl << "path exists" << endl;
+                        }
+                        else 
+                        {
+                            cout << "(False)" << endl;
+                        }
                     }
-                }
-                
-                
-		        else if (token == "test") //implement 
-		        {
-			
-		        }
-		        else if (token.at(0) == '[') // TEST CHECK - TODO: run stat() based on flag
-		        {
-			        bool done = false;
-			        while (done == false)
-			        {
-			        
-				        unsigned i = 0;
-				    
-				        if (token.at(i) == '[')
-				        {
-					        ++i;
-				        }
-				        for (; i < token.size(); i++)
-				        {
-					        if (token.at(i) != ']')
-					        {
-						        newtoken << token.at(i);
-					        }
-					        else
-					        {
-						        done = true;
-					        }
-				        }
-				
-				        newtoken << ' ';
-			            ss >> token;
-		            }
-		    
-			        token = newtoken.str();
-			        cout << "YO: " << token << endl;
+                    else if (flag == "-d") 
+                    {
+                        if (stat(f, &exist) == 0 && S_ISDIR(exist.st_mode)) 
+                        {
+                            cout << "(True)" << endl << "path exists" << endl;
+                        }
+                        else 
+                        {
+                            cout << "(False)" << endl;
+                        }
+                    }
+                    
+        		}
+        		
+        		
+        		else if (token == "[") // BRANCHES CHECK 
+        		{
+        		    string flag;
+        		    string path;
+        		    
+        			bool done = false;
+        			while (done == false)
+        			{
+        				if (token == "[")
+        				{
+        					ss >> token;
+        				}
+        				if (token == "[")
+        				{
+        					ss >> token;
+        				}
+ 
+    					else 
+    					{
+    						newtoken << token;
+    					}
+        				token = newtoken.str();
+        				
+                        //cout << "TOKEN: " << token << endl;
+                        if (token == "-e" || token == "-f" || token == "-d")
+                        {
+                            flag = token;
+                        }
+                        else
+                        {
+                            path = token;
+                        }
+        				
+                        newtoken.str( std::string() );
+                        newtoken.clear();
 
-			        string flag;
-			        string path;
-			        int sep = 0;
-			    
-			        for (unsigned i = 1; i < token.size()-1; i++)
-			        {	
-				        if (token.at(i) == ' ')
-				        {
-					        sep = i;
-				        }
-			        }
-			    
-			        for (unsigned i = 1; i < sep; i++)
-			        {	
-				        flag += token.at(i);
-			        }
-			    
-			        for (unsigned i = sep; i < token.size()-1; i++)
-			        {	
-				        path += token.at(i);
-			        }
-		        }
+        			    ss >> token;
+        			    
+        			    if (token == "]")
+    					{
+    						done = true;
+    					}
+        		    }
+        		         
+                    //cout << "flag : " << flag << endl; 
+                    //cout << "path : " << path << endl; 
+                    char f[1024];
+                    strcpy(f, path.c_str());
+                    struct stat exist;
+                    if (flag == "-e") 
+                    {
+                        if (stat(f, &exist) == 0) 
+                        {
+                            cout << "(True)" << endl << "path exists" << endl;
+                        }
+                        else 
+                        {
+                            cout << "(False)" << endl;
+                        }
+                    }
+                    else if (flag == "-f") 
+                    {
+                        if (stat(f, &exist) == 0 && S_ISREG(exist.st_mode)) 
+                        {
+                            cout << "(True)" << endl << "path exists" << endl;
+                        }
+                        else 
+                        {
+                            cout << "(False)" << endl;
+                        }
+                    }
+                    else if (flag == "-d") 
+                    {
+                        if (stat(f, &exist) == 0 && S_ISDIR(exist.st_mode)) 
+                        {
+                            cout << "(True)" << endl << "path exists" << endl;
+                        }
+                        else 
+                        {
+                            cout << "(False)" << endl;
+                        }
+                    }
+                    
+        	}
 		        else if (token.at(0) == '(') // PARETHESIS CHECK TODO: APPLY LOGIC FOR PRECEDENCE
 		        {
 		        
