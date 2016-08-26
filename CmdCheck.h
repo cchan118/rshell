@@ -39,7 +39,7 @@ class CmdCheck {
 				ss >> token;
 			}
     			newtoken << token;
-			token = newtoken.str();
+			    token = newtoken.str();
 			
 		        //cout << "TOKEN: " << token << endl;
 		        if (token == "-e" || token == "-f" || token == "-d")
@@ -62,189 +62,195 @@ class CmdCheck {
     				done = true;
     			}
 		    }
-                    //cout << "flag : " << flag << endl; 
-                    //cout << "path : " << path << endl; 
+		    
+		    
+            //cout << "flag : " << flag << endl; 
+            //cout << "path : " << path << endl; 
                     
-                    char f[1024];
-                    strcpy(f, path.c_str());
-                    struct stat exist;
-                    if (flag == "-e") 
-                    {
-                        if (stat(f, &exist) == 0) 
-                        {
-                            cout << "(True)" << endl << "path exists" << endl;
-                        }
-                        else 
-                        {
-                            cout << "(False)" << endl;
-                        }
-                    }
-                    else if (flag == "-f") 
-                    {
-                        if (stat(f, &exist) == 0 && S_ISREG(exist.st_mode)) 
-                        {
-                            cout << "(True)" << endl << "path exists" << endl;
-                        }
-                        else 
-                        {
-                            cout << "(False)" << endl;
-                        }
-                    }
-                    else if (flag == "-d") 
-                    {
-                        if (stat(f, &exist) == 0 && S_ISDIR(exist.st_mode)) 
-                        {
-                            cout << "(True)" << endl << "path exists" << endl;
-                        }
-                        else 
-                        {
-                            cout << "(False)" << endl;
-                        }
-                    }
-                    
-        		}
+            char f[1000];
+            strcpy(f, path.c_str());
+            struct stat exist;
+            if (flag == "-e") 
+            {
+                if (stat(f, &exist) == 0) 
+                {
+                    cout << "(True)" << endl << "path exists" << endl;
+                }
+                else 
+                {
+                        cout << "(False)" << endl;
+                }
+            }
+            
+            else if (flag == "-f") 
+            {
+                if (stat(f, &exist) == 0 && S_ISREG(exist.st_mode)) 
+                {
+                    cout << "(True)" << endl << "path exists" << endl;
+                }
+                else 
+                {
+                        cout << "(False)" << endl;
+                }
+            }
+            
+            else if (flag == "-d") 
+            {
+                if (stat(f, &exist) == 0 && S_ISDIR(exist.st_mode)) 
+                {
+                    cout << "(True)" << endl << "path exists" << endl;
+                }
+                else 
+                {
+                    cout << "(False)" << endl;
+                }
+            }
+        }
         		
         		
-        		else if (token == "[") // BRANCHES CHECK 
-        		{
-        		    string flag;
-        		    string path;
+        else if (token == "[") // BRANCHES CHECK 
+        {
+            string flag;
+            string path;
         		    
-        			bool done = false;
-        			while (done == false)
-        			{
-        				if (token == "[")
-        				{
-        					ss >> token;
-        				}
-        				if (token == "[")
-        				{
-        					ss >> token;
-        				}
+        	bool done = false;
+        	while (done == false)
+        	{
+        		if (token == "[")
+        		{
+        			ss >> token;
+        		}
+        		/*if (token == "[")
+        		{
+        			ss >> token;
+        		}
+        		*/
  
-    					else 
-    					{
-    						newtoken << token;
-    					}
-        				token = newtoken.str();
+    			else 
+    			{
+    				newtoken << token;
+    			}
+    			
+        		token = newtoken.str();
         				
-                        //cout << "TOKEN: " << token << endl;
-                        if (token == "-e" || token == "-f" || token == "-d")
-                        {
-                            flag = token;
-                        }
-                        else
-                        {
-                            path = token;
-                        }
+                //cout << "TOKEN: " << token << endl;
+                if (token == "-e" || token == "-f" || token == "-d")
+                {
+                    flag = token;
+                }
+                else
+                {
+                    path = token;
+                }
         				
-                        newtoken.str( std::string() );
-                        newtoken.clear();
+                newtoken.str( std::string() );
+                newtoken.clear();
 
-        			    ss >> token;
+        		ss >> token;
         			    
-        			    if (token == "]")
-    					{
-    						done = true;
-    					}
-        		    }
+        		if (token == "]")
+    			{
+    				done = true;
+    			}
+            }
         		         
-                    //cout << "flag : " << flag << endl; 
-                    //cout << "path : " << path << endl; 
-                    char f[1024];
-                    strcpy(f, path.c_str());
-                    struct stat exist;
-                    if (flag == "-e") 
-                    {
-                        if (stat(f, &exist) == 0) 
-                        {
-                            cout << "(True)" << endl << "path exists" << endl;
-                        }
-                        else 
-                        {
-                            cout << "(False)" << endl;
-                        }
-                    }
-                    else if (flag == "-f") 
-                    {
-                        if (stat(f, &exist) == 0 && S_ISREG(exist.st_mode)) 
-                        {
-                            cout << "(True)" << endl << "path exists" << endl;
-                        }
-                        else 
-                        {
-                            cout << "(False)" << endl;
-                        }
-                    }
-                    else if (flag == "-d") 
-                    {
-                        if (stat(f, &exist) == 0 && S_ISDIR(exist.st_mode)) 
-                        {
-                            cout << "(True)" << endl << "path exists" << endl;
-                        }
-                        else 
-                        {
-                            cout << "(False)" << endl;
-                        }
-                    }
-                    
-        	}
-		        else if (token.at(0) == '(') // PARETHESIS CHECK TODO: APPLY LOGIC FOR PRECEDENCE
-		        {
-		        
-			        bool done = false;
-			        while (done == false)
+            //cout << "flag : " << flag << endl; 
+            //cout << "path : " << path << endl; 
+            char f[1000];
+            strcpy(f, path.c_str());
+            struct stat exist;
+            if (flag == "-e") 
+            {
+                if (stat(f, &exist) == 0) 
+                {
+                    cout << "(True)" << endl << "path exists" << endl;
+                }
+                else 
+                {
+                    cout << "(False)" << endl;
+                }
+            }
+            
+            else if (flag == "-f") 
+            {
+                if (stat(f, &exist) == 0 && S_ISREG(exist.st_mode)) 
+                {
+                    cout << "(True)" << endl << "path exists" << endl;
+                }
+                else 
+                {
+                    cout << "(False)" << endl;
+                }
+            }
+            
+            else if (flag == "-d") 
+            {
+                if (stat(f, &exist) == 0 && S_ISDIR(exist.st_mode)) 
+                {
+                    cout << "(True)" << endl << "path exists" << endl;
+                }
+                else 
+                {
+                    cout << "(False)" << endl;
+                }
+            }
+    	}
+    	
+	    else if (token.at(0) == '(') // PARETHESIS CHECK TODO: APPLY LOGIC FOR PRECEDENCE
+		{
+		    bool done = false;
+	        while (done == false)
+            {
+			        unsigned i = 0;
+			        if (token.at(i) == '(')
 			        {
-				        unsigned i = 0;
-				        if (token.at(i) == '(')
+				        ++i;
+			        }
+			        for (; i < token.size(); i++)
+			        {
+				        if (token.at(i) != ')')
 				        {
-					        ++i;
+					        newtoken << token.at(i);
 				        }
-				        for (; i < token.size(); i++)
+				        else
 				        {
-					        if (token.at(i) != ')')
-					        {
-						        newtoken << token.at(i);
-					        }
-					        else
-					        {
-						        done = true;
-					        }
+					        done = true;
 				        }
+			        }
                 
-                        	token = newtoken.str();
+                	token = newtoken.str();
 				
-				//Check for connectors in parenthesis
-                        	if (token.at(token.size() - 1) == ';') 
-                        	{
-                            		con = "skip"; 
-                            		v.push_back(token.substr(0, token.size() - 1));
-                            		break;
-                        	}
-                        	else if (strcmp(token.c_str(), "||") == 0) 
-                        	{
-                            		con = "yes"; 
-                            		break;
-                        	}
-                        	else if (strcmp(token.c_str(), "&&") == 0) 
-                        	{
-                            		con = "no";
-                            		break;
-                        	}
+		    		//Check for connectors in parenthesis
+                	if (token.at(token.size() - 1) == ';') 
+                	{
+                		con = "skip"; 
+                		v.push_back(token.substr(0, token.size() - 1));
+                		break;
+                	}
+                	else if (strcmp(token.c_str(), "||") == 0) 
+                	{
+                		con = "yes"; 
+                		break;
+                	}
+                	else if (strcmp(token.c_str(), "&&") == 0) 
+                	{
+                		con = "no";
+                		break;
+                	}
                 
-                        	v.push_back(token);
+                	v.push_back(token);
 
-                        	newtoken.str( std::string() );
-                        	newtoken.clear();
-		                //newtoken << ' ';
-		                ss >> token;
+                	newtoken.str( std::string() );
+                	newtoken.clear();
+		            //newtoken << ' ';
+		              ss >> token;
 
-		            }
+		    }
 			        //token = newtoken.str();
 			        //cout << "W/O parenthesis: " << token << endl;
 			 
 			        //TODO Run string as two separate commands then determine if true/false
-		        }   
+		}   
                 
                 	//If no parenthesis, then just check for connector
 		        else
