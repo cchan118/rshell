@@ -3,10 +3,11 @@
 
 #include "Connector.h"
 #include <string.h>
+#include <stdio.h>
 #include <sstream>
 #include <vector>
 #include <unistd.h>
-
+using namespace std;
 class CmdCheck {
     public:
         CmdCheck() {};
@@ -15,18 +16,147 @@ class CmdCheck {
             string token;
             vector<string> v;
             string con = ""; 
-            
+
+	    vector<string> test;
+            stringstream newtoken;
+	    string temp;
             while (ss >> token) //gets input from string stream and doesnt echo quotation marks
             {
            	if (token.at(0) == '"') 
                 {
                     token = token.substr(1, token.size() - 2);
 		}
-		/*if (token == "test" || token.at(0) == "[")
+		else if (token == "test") //implement 
 		{
-		    checkTest(ss);
-		}*/
+			
+		}
+		else if (token.at(0) == '[') // TEST CHECK - TODO: run stat() based on flag
+		{
+			bool done = false;
+			while (done == false)
+			{
+				unsigned i = 0;
+				if (token.at(i) == '[')
+				{
+					++i;
+				}
+				for (; i < token.size(); i++)
+				{
+					if (token.at(i) != ']')
+					{
+						newtoken << token.at(i);
+					}
+					else
+					{
+						done = true;
+					}
+				}
+				newtoken << ' ';
+			        ss >> token;
+		         }
+			token = newtoken.str();
+			cout << "YO: " << token << endl;
 
+			string flag;
+			string path;
+			int sep = 0;
+			for (unsigned i = 1; i < token.size()-1; i++)
+			{	
+				if (token.at(i) == ' ')
+				{
+					sep = i;
+				}
+			}
+			for (unsigned i = 1; i < sep; i++)
+			{	
+				flag += token.at(i);
+			}
+			for (unsigned i = sep; i < token.size()-1; i++)
+			{	
+				path += token.at(i);
+			}
+//stringstream test;
+//test << newtoken.str();
+cout << "flag : " << flag << endl; 
+cout << "path : " << path << endl; 
+/*
+if (token.at(1) == "-e")
+{
+	bget
+}
+else if (test == "-f")
+{
+	rewfr
+}
+else if (test == "-d")
+{
+	def
+}
+else
+{
+*/
+
+		}
+		else if (token.at(0) == '(') // PARETHESIS CHECK TODO: APPLY LOGIC FOR PRECEDENCE
+		{
+			bool done = false;
+			while (done == false)
+			{
+				unsigned i = 0;
+				if (token.at(i) == '(')
+				{
+					++i;
+				}
+				for (; i < token.size(); i++)
+				{
+					if (token.at(i) != ')')
+					{
+						newtoken << token.at(i);
+					}
+					else
+					{
+						done = true;
+						
+					}
+				}
+//cout << newtoken.str() << endl;
+token = newtoken.str();
+
+if (token.at(token.size() - 1) == ';') 
+                {
+                    con = "skip"; 
+                    v.push_back(token.substr(0, token.size() - 1));
+                    break;
+                }
+                else if (strcmp(token.c_str(), "||") == 0) 
+                {
+                    con = "yes"; 
+                    break;
+                }
+                else if (strcmp(token.c_str(), "&&") == 0) 
+                {
+                    con = "no";
+                    break;
+                }
+                
+                v.push_back(token);
+                     
+
+
+
+newtoken.str( std::string() );
+newtoken.clear();
+				//newtoken << ' ';
+			        ss >> token;
+
+		         }
+			 //token = newtoken.str();
+			 //cout << "W/O parenthesis: " << token << endl;
+			 
+			//TODO Run string as two separate commands then determine if true/false
+
+
+		}
 		//Anything that appears after a # character should be considered a comment. 
                 else 
                 {
@@ -62,7 +192,6 @@ class CmdCheck {
                     con = "no";
                     break;
                 }
-                
                 
                 v.push_back(token);
                      
