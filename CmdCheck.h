@@ -120,11 +120,11 @@ class CmdCheck {
         		{
         			ss >> token;
         		}
-        		/*if (token == "[")
+        		if (token == "[")
         		{
         			ss >> token;
         		}
-        		*/
+        		
  
     			else 
     			{
