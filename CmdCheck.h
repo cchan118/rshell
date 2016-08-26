@@ -127,29 +127,30 @@ class CmdCheck {
 					        }
 				        }
                 
-                        token = newtoken.str();
-
-                        if (token.at(token.size() - 1) == ';') 
-                        {
-                            con = "skip"; 
-                            v.push_back(token.substr(0, token.size() - 1));
-                            break;
-                        }
-                        else if (strcmp(token.c_str(), "||") == 0) 
-                        {
-                            con = "yes"; 
-                            break;
-                        }
-                        else if (strcmp(token.c_str(), "&&") == 0) 
-                        {
-                            con = "no";
-                            break;
-                        }
+                        	token = newtoken.str();
+				
+				//Check for connectors in parenthesis
+                        	if (token.at(token.size() - 1) == ';') 
+                        	{
+                            		con = "skip"; 
+                            		v.push_back(token.substr(0, token.size() - 1));
+                            		break;
+                        	}
+                        	else if (strcmp(token.c_str(), "||") == 0) 
+                        	{
+                            		con = "yes"; 
+                            		break;
+                        	}
+                        	else if (strcmp(token.c_str(), "&&") == 0) 
+                        	{
+                            		con = "no";
+                            		break;
+                        	}
                 
-                        v.push_back(token);
+                        	v.push_back(token);
 
-                        newtoken.str( std::string() );
-                        newtoken.clear();
+                        	newtoken.str( std::string() );
+                        	newtoken.clear();
 		                //newtoken << ' ';
 		                ss >> token;
 
@@ -160,29 +161,29 @@ class CmdCheck {
 			        //TODO Run string as two separate commands then determine if true/false
 		        }   
                 
-                //If no parenthesis, then just check for connector
+                	//If no parenthesis, then just check for connector
 		        else
 		        {
 		            // identifies token as either ; && or || and places into vector
-                    if (token.at(token.size() - 1) == ';') 
-                    {
-                        con = "skip"; 
-                        v.push_back(token.substr(0, token.size() - 1));
-                        break;
-                    }
-                    else if (strcmp(token.c_str(), "||") == 0) 
-                    {
-                        con = "yes"; 
-                        break;
-                    }
-                    else if (strcmp(token.c_str(), "&&") == 0) 
-                    {
-                        con = "no";
-                        break;
-                    }
+                    		if (token.at(token.size() - 1) == ';') 
+                    		{
+                        		con = "skip"; 
+                        		v.push_back(token.substr(0, token.size() - 1));
+                        		break;
+                    		}
+                    		else if (strcmp(token.c_str(), "||") == 0) 
+                    		{
+                        		con = "yes"; 
+                        		break;
+                    		}
+                    		else if (strcmp(token.c_str(), "&&") == 0) 
+                    		{
+                        		con = "no";
+                        		break;
+                    		}
                 
-                    v.push_back(token);
-		        }
+                    	v.push_back(token);
+			}
             }
              
 	        //moves from vector to argument list
